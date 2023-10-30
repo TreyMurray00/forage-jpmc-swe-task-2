@@ -1,0 +1,201 @@
+Subject: [PATCH] task 2 complete
+---
+Index: .idea/.gitignore
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+--- /dev/null	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
++++ b/.idea/.gitignore	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -0,0 +1,8 @@
++# Default ignored files
++/shelf/
++/workspace.xml
++# Editor-based HTTP Client requests
++/httpRequests/
++# Datasource local storage ignored files
++/dataSources/
++/dataSources.local.xml
+Index: .idea/forage-jpmc-swe-task-2.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/forage-jpmc-swe-task-2.iml b/.idea/forage-jpmc-swe-task-2.iml
+new file mode 100644
+--- /dev/null	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
++++ b/.idea/forage-jpmc-swe-task-2.iml	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -0,0 +1,10 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="PYTHON_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/venv" />
++    </content>
++    <orderEntry type="jdk" jdkName="Python 3.11 (forage-jpmc-swe-task-2)" jdkType="Python SDK" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+Index: .idea/inspectionProfiles/profiles_settings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/profiles_settings.xml b/.idea/inspectionProfiles/profiles_settings.xml
+new file mode 100644
+--- /dev/null	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
++++ b/.idea/inspectionProfiles/profiles_settings.xml	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <settings>
++    <option name="USE_PROJECT_PROFILE" value="false" />
++    <version value="1.0" />
++  </settings>
++</component>
+\ No newline at end of file
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/misc.xml b/.idea/misc.xml
+new file mode 100644
+--- /dev/null	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
++++ b/.idea/misc.xml	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -0,0 +1,4 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.11 (forage-jpmc-swe-task-2)" project-jdk-type="Python SDK" />
++</project>
+\ No newline at end of file
+Index: .idea/modules.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+--- /dev/null	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
++++ b/.idea/modules.xml	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/forage-jpmc-swe-task-2.iml" filepath="$PROJECT_DIR$/.idea/forage-jpmc-swe-task-2.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+new file mode 100644
+--- /dev/null	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
++++ b/.idea/vcs.xml	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -0,0 +1,6 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="VcsDirectoryMappings">
++    <mapping directory="" vcs="Git" />
++  </component>
++</project>
+\ No newline at end of file
+Index: src/App.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/App.tsx b/src/App.tsx
+--- a/src/App.tsx	(revision 3022e1f02670f8336f457078532f98c50f77496e)
++++ b/src/App.tsx	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -8,6 +8,7 @@
+  */
+ interface IState {
+   data: ServerRespond[],
++  showGraph: boolean,
+ }
+ 
+ /**
+@@ -22,6 +23,7 @@
+       // data saves the server responds.
+       // We use this state to parse data down to the child element (Graph) as element property
+       data: [],
++      showGraph: false,
+     };
+   }
+ 
+@@ -29,18 +31,29 @@
+    * Render Graph react component with state.data parse as property data
+    */
+   renderGraph() {
+-    return (<Graph data={this.state.data}/>)
+-  }
++    if(this.state.showGraph == true){
++      return (<Graph data={this.state.data}/>)
++    }
+ 
++  }
++
+   /**
+    * Get new data from server and update the state with the new data
+    */
+   getDataFromServer() {
+-    DataStreamer.getData((serverResponds: ServerRespond[]) => {
+-      // Update the state by creating a new array of data that consists of
+-      // Previous data in the state and the new data from server
+-      this.setState({ data: [...this.state.data, ...serverResponds] });
+-    });
++      let x = 0
++      const timer = setInterval(
++          ()=>{
++              DataStreamer.getData((serverResponds: ServerRespond[]) => {
++                  this.setState({ data: serverResponds,showGraph:true });
++              });
++            x++;
++            if (x > 1000){
++              clearInterval(timer)
++            }
++          },
++          100
++      )
+   }
+ 
+   /**
+Index: src/Graph.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Graph.tsx b/src/Graph.tsx
+--- a/src/Graph.tsx	(revision 3022e1f02670f8336f457078532f98c50f77496e)
++++ b/src/Graph.tsx	(revision 8acb06ce99cbde9988937f64e509efbacdcebfb8)
+@@ -14,7 +14,7 @@
+  * Perspective library adds load to HTMLElement prototype.
+  * This interface acts as a wrapper for Typescript compiler.
+  */
+-interface PerspectiveViewerElement {
++interface PerspectiveViewerElement extends HTMLElement{
+   load: (table: Table) => void,
+ }
+ 
+@@ -32,7 +32,12 @@
+ 
+   componentDidMount() {
+     // Get element to attach the table from the DOM.
+-    const elem: PerspectiveViewerElement = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
++    const elem = document.getElementsByTagName('perspective-viewer')[0] as unknown as PerspectiveViewerElement;
++    elem.setAttribute("view",'y-line');
++    elem.setAttribute("column-pivots",'["stock"]');
++    elem.setAttribute("row-pivots",'["timestamp"]');
++    elem.setAttribute("columns",'["top_ask_price"]');
++    elem.setAttribute("aggregates",'{"stock":"distinct count", "top_ask_price":"avg", "top_bid_price":"avg","timestamp":"distinct count"}');
+ 
+     const schema = {
+       stock: 'string',
